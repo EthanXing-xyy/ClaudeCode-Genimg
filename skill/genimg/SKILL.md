@@ -1,6 +1,6 @@
 ---
 name: genimg
-description: Generate or edit images with the local codex CLI's image tool (ChatGPT login, no API key) and save them as PNGs — one or many pictures, variants, edits of an existing picture, transparent backgrounds. Use whenever the user asks to generate, draw, make or change a picture, icon, illustration, poster or texture — "生图", "画一张", "生成图片", "改图", "把这张图…", "用 codex 画" — and when a genimg run printed DRIFT or the user says "repair genimg" / "修复 genimg".
+description: Generate or edit images with the local codex CLI's image tool (ChatGPT login, no API key) and save them as PNGs — one or many pictures, variants, edits of an existing picture, transparent backgrounds. Use whenever the user asks to generate, draw, make or change a picture, icon, illustration, poster or texture — "生图", "画一张", "生成图片", "改图", "把这张图…", "用 codex 画", "image2.5" — and when a genimg run printed DRIFT or the user says "repair genimg" / "修复 genimg".
 allowed-tools: PowerShell Read Edit Grep
 ---
 
@@ -36,11 +36,24 @@ about 35k tokens of overhead.
   drawn one after another, about 60 s each; wait for the completion notice, do
   not poll.
 - codex looks at each result itself and redraws until it matches its prompt;
-  how many rounds is codex's own call. Leave it that way unless the user asks
-  to save quota: `-Tries <n>` caps the draws per picture and `-NoCheck` turns
-  the looking off. So do not Read the PNGs afterwards unless the user asks for
-  them to be checked or the next step depends on what they show: viewing costs
-  the user more than codex's own check.
+  how many rounds is codex's own call. Leave it that way and trust codex's
+  judgement. Only when the user asks to save quota, `-Tries <n>` caps the draws
+  per picture and `-NoCheck` turns the looking off. So do not Read the PNGs
+  afterwards unless the user asks for them to be checked or the next step
+  depends on what they show: viewing costs the user more than codex's own check.
+- The exception is a picture that teaches something: a principle diagram,
+  flowchart, architecture diagram, or any labelled schematic. It has to be
+  right, and codex only checks it against the prompt, never against the
+  subject, so a gap in the prompt comes out as a gap in the picture. For these:
+  1. Before writing the prompt, list the elements, the connections (what feeds
+     what, where each loop returns to) and the labels, and check that list
+     against the subject for mistakes and omissions. This costs no image quota
+     and is where the errors are cheapest to catch.
+  2. After the run, Read the PNG once and check it item by item against that
+     list, and its text for miswritten characters.
+  3. If it is right, stop: no redraw and no "improvement", a draw costs quota.
+     If something is wrong, put every fix into one `-Edit` call.
+  Tell the user what was checked and what, if anything, was wrong.
 - It prints `OK <path> <W>x<H> <n>KB` per picture (`MISS <path>` for one that
   never came out), then
   `DONE <made>/<asked> drawn=<n> <n>s tokens=<n> codex 5h=<n>% week=<n>% model=<m> effort=<e>`
@@ -57,8 +70,9 @@ about 35k tokens of overhead.
   references (with `-Edit`: material to insert). `-Size '1536x1024'` or a
   ratio such as `16:9` is a request, not exact pixel control. Both apply to
   every picture of the call.
-- `-Out` must end in `.png`. In a project, save under the project; with no
-  project, ask where. An existing file needs `-Force`.
+- `-Out` must end in `.png`. In a project, save under the project (kept art in
+  its asset folder, throwaway tries in `<project>/.ai/`); with no project, ask
+  where or use the session scratchpad. An existing file needs `-Force`.
 - `-PromptFile x.txt` (UTF-8, prompts parted by a line holding only `---`) for
   long prompts; `-TimeoutSec`.
 - Write the prompts in English, each complete on its own: subject, style,
