@@ -1,6 +1,6 @@
 **English** | [中文](README_zh.md)
 
-# ClaudeCode-genimg: image generation for Claude Code through the local codex CLI
+# ClaudeCode-Genimg: image generation for Claude Code through the local codex CLI
 
 ![Six pictures made with genimg: a lantern, a kite and a frog from one call; the frog with a transparent background; the same frog edited to wear a party hat; a sign with Chinese text kept as written](media/examples.png)
 
@@ -35,16 +35,16 @@ Several projects already wrap `codex exec` for pictures. This one is built aroun
 ## Install
 
 ```powershell
-git clone https://github.com/EthanXing-xyy/ClaudeCode-genimg
-Copy-Item -Recurse .\ClaudeCode-genimg\skill\genimg "$env:USERPROFILE\.claude\skills\"
+git clone https://github.com/EthanXing-xyy/ClaudeCode-Genimg
+Copy-Item -Recurse .\ClaudeCode-Genimg\skill\genimg "$env:USERPROFILE\.claude\skills\"
 ```
 
 For `/genimg-set`, load the mod folder as a plugin:
 
 ```powershell
-claude --plugin-dir <path>\ClaudeCode-genimg\mod\genimg-set
+claude --plugin-dir <path>\ClaudeCode-Genimg\mod\genimg-set
 # or, for every session:
-setx CLAUDE_CODE_PLUGIN_DIRS "<path>\ClaudeCode-genimg\mod\genimg-set"
+setx CLAUDE_CODE_PLUGIN_DIRS "<path>\ClaudeCode-Genimg\mod\genimg-set"
 ```
 
 If the wrapper lives somewhere other than `%USERPROFILE%\.claude\skills\genimg`, set `GENIMG_HOME` to that folder so the mod finds it, and adjust the path in `SKILL.md`.
