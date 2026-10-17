@@ -1,6 +1,6 @@
 [English](README.md) | **中文**
 
-# claude-codex-genimg：让 Claude Code 通过本地 codex CLI 生图
+# ClaudeCode-genimg：让 Claude Code 通过本地 codex CLI 生图
 
 ![用 genimg 做的六张图：一次调用画出的灯笼、风筝和青蛙；透明背景的青蛙；同一只青蛙改图戴上派对帽；中文文字原样保留的招牌](media/examples.png)
 
@@ -35,16 +35,16 @@
 ## 安装
 
 ```powershell
-git clone https://github.com/EthanXing-xyy/claude-codex-genimg
-Copy-Item -Recurse .\claude-codex-genimg\skill\genimg "$env:USERPROFILE\.claude\skills\"
+git clone https://github.com/EthanXing-xyy/ClaudeCode-genimg
+Copy-Item -Recurse .\ClaudeCode-genimg\skill\genimg "$env:USERPROFILE\.claude\skills\"
 ```
 
 要用 `/genimg-set`，把插件目录加载进来：
 
 ```powershell
-claude --plugin-dir <path>\claude-codex-genimg\mod\genimg-set
+claude --plugin-dir <path>\ClaudeCode-genimg\mod\genimg-set
 # 或者每个会话都加载：
-setx CLAUDE_CODE_PLUGIN_DIRS "<path>\claude-codex-genimg\mod\genimg-set"
+setx CLAUDE_CODE_PLUGIN_DIRS "<path>\ClaudeCode-genimg\mod\genimg-set"
 ```
 
 如果脚本不在 `%USERPROFILE%\.claude\skills\genimg`，把 `GENIMG_HOME` 设成脚本所在目录，插件才能找到它，同时改一下 `SKILL.md` 里的路径。
